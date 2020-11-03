@@ -58,7 +58,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>20</y>
+      <y>10</y>
       <width>461</width>
       <height>80</height>
      </rect>
@@ -70,9 +70,9 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>40</y>
+       <y>30</y>
        <width>88</width>
-       <height>22</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -85,7 +85,7 @@
        <x>10</x>
        <y>30</y>
        <width>171</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -143,11 +143,14 @@
        <x>360</x>
        <y>30</y>
        <width>88</width>
-       <height>34</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Справка</string>
+     </property>
+     <property name="icon">
+      <iconset theme="help-about"/>
      </property>
     </widget>
    </widget>
@@ -157,56 +160,30 @@
       <x>730</x>
       <y>100</y>
       <width>461</width>
-      <height>221</height>
+      <height>301</height>
      </rect>
     </property>
     <property name="title">
      <string/>
     </property>
-    <widget class="QLabel" name="facilitiesLabel">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>10</y>
-       <width>171</width>
-       <height>18</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Инженерные средства</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="tacticsLabel">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>10</y>
-       <width>151</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Тактика преодоления</string>
-     </property>
-    </widget>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>421</width>
-       <height>181</height>
+       <x>10</x>
+       <y>10</y>
+       <width>441</width>
+       <height>271</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_1">
       <widget class="QRadioButton" name="woodDoor">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>50</y>
          <width>181</width>
          <height>22</height>
         </rect>
@@ -222,7 +199,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>100</y>
          <width>171</width>
          <height>41</height>
         </rect>
@@ -239,7 +216,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>110</y>
+         <y>180</y>
          <width>191</width>
          <height>22</height>
         </rect>
@@ -255,7 +232,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>150</y>
+         <y>240</y>
          <width>105</width>
          <height>22</height>
         </rect>
@@ -271,7 +248,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>10</y>
+         <y>50</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -309,7 +286,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>50</y>
+         <y>110</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -347,7 +324,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>100</y>
+         <y>170</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -390,7 +367,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>140</y>
+         <y>230</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -419,13 +396,51 @@
         </property>
        </item>
       </widget>
+      <widget class="QLabel" name="tacticsLabel_1">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>10</y>
+         <width>151</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Тактика преодоления</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="facilitiesLabel_1">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>171</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Инженерные средства</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="page_2">
       <widget class="QRadioButton" name="concrete">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>50</y>
          <width>191</width>
          <height>22</height>
         </rect>
@@ -441,9 +456,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
+         <y>80</y>
          <width>171</width>
-         <height>61</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="text">
@@ -459,7 +474,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>110</y>
+         <y>160</y>
          <width>201</width>
          <height>22</height>
         </rect>
@@ -475,7 +490,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>150</y>
+         <y>200</y>
          <width>171</width>
          <height>22</height>
         </rect>
@@ -491,7 +506,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>50</y>
+         <y>100</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -514,7 +529,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>10</y>
+         <y>50</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -537,7 +552,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>100</y>
+         <y>150</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -565,7 +580,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>140</y>
+         <y>190</y>
          <width>171</width>
          <height>31</height>
         </rect>
@@ -589,6 +604,60 @@
         </property>
        </item>
       </widget>
+      <widget class="QLabel" name="facilitiesLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>171</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Инженерные средства</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="tacticsLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>10</y>
+         <width>151</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Тактика преодоления</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="antiram">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>240</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Противотаранное уст-во</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
       <zorder>gridWallBox</zorder>
       <zorder>concrete</zorder>
       <zorder>concreteAKP</zorder>
@@ -597,16 +666,269 @@
       <zorder>concreteAKPBox</zorder>
       <zorder>concreteBox</zorder>
       <zorder>barbedWallBox</zorder>
+      <zorder>facilitiesLabel_2</zorder>
+      <zorder>tacticsLabel_2</zorder>
+      <zorder>antiram</zorder>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <widget class="QRadioButton" name="irFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>100</y>
+         <width>171</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Инфракрасный датчик</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="gerkonFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>100</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Герконовый датчик</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="elmechFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>160</y>
+         <width>211</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Электромеханический замок</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="turnstileFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>151</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Турникет</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QLabel" name="tacticsLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>251</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Технические средства обнаружения</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="videoFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>70</y>
+         <width>151</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Видеокамера</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="cardFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>190</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Считыватели карт</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="alarmFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>190</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Кнопка тревоги</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="glassFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>40</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Датчик разбития стекла</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="warmFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>70</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Тепловой извещатель</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="bioFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>130</y>
+         <width>221</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Биометрический считыватель</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="capacityFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>130</y>
+         <width>181</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Емкостное средство</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="radioFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>160</y>
+         <width>201</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Радиолучевое средство</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="bombFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>220</y>
+         <width>151</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Обнаружитель ВВ</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+      <widget class="QRadioButton" name="piezoFacility">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>220</y>
+         <width>181</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Пьезоэлектрическое</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="listButton">
+    <widget class="QPushButton" name="listButton_next">
      <property name="geometry">
       <rect>
-       <x>430</x>
+       <x>440</x>
        <y>10</y>
-       <width>21</width>
+       <width>20</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
      </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
@@ -615,62 +937,45 @@
       <string notr="true">QPushButton {border:  none}</string>
      </property>
      <property name="text">
-      <string>&gt;</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset theme="go-next"/>
      </property>
     </widget>
-   </widget>
-   <widget class="QGroupBox" name="technicalBox">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>370</y>
-      <width>461</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Технические средства</string>
-    </property>
-    <widget class="QRadioButton" name="capacityFacility">
+    <widget class="QPushButton" name="listButton_prev">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>20</y>
-       <width>181</width>
-       <height>41</height>
+       <x>420</x>
+       <y>10</y>
+       <width>21</width>
+       <height>21</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Емкостное
-средство обнаружения</string>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
      </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-    <widget class="QRadioButton" name="radioFacility">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>20</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {border:  none}</string>
      </property>
      <property name="text">
-      <string>Радиолучевое
-средство обнаружения</string>
+      <string/>
      </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
+     <property name="icon">
+      <iconset theme="go-previous"/>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="tacticsBox">
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>450</y>
+      <y>460</y>
       <width>461</width>
       <height>111</height>
      </rect>
@@ -716,7 +1021,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>570</y>
+      <y>580</y>
       <width>461</width>
       <height>91</height>
      </rect>
@@ -793,7 +1098,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>320</y>
+      <y>410</y>
       <width>461</width>
       <height>41</height>
      </rect>
@@ -879,13 +1184,59 @@ QRadioButton::indicator::checked {
     <property name="geometry">
      <rect>
       <x>910</x>
-      <y>670</y>
+      <y>680</y>
       <width>281</width>
-      <height>101</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>pictures/save.png</normaloff>pictures/save.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="loadButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>0</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>pictures/open.png</normaloff>pictures/open.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
     </property>
    </widget>
   </widget>

@@ -2,13 +2,14 @@ import sys
 from random import random
 import traceback # Тестирование
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QPushButton, QDialog, QPushButton, QVBoxLayout, QLabel
 import numpy as np
 
 import design
 import path
+import saving
 from cell import Cell
 
 class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
@@ -16,8 +17,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         
-        # Файл ошибок
-        self.log_file = open('logs', 'w')
+        # Создание файла ошибок
+        with open('logs', 'w') as log_file:
+            pass
         # Координаты нарушителей
         self.intruders = []
         # Координаты ПФЗ
@@ -32,7 +34,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.outputLabel.setText('')
         # Отрисовка дополнительных компонентов
         self.UiComponents()
-        
+        # 
 
         #
         #
@@ -50,23 +52,35 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 cell.move(30+16*row,70+16*col)
                 cell.clicked.connect(cell.click)
                 self.field[-1].append(cell)
-
+        #
         # Кнопка перелистывания окна инженерных средств
-        self.listButton.clicked.connect(self.listMenu)
+        self.listButton_next.clicked.connect(lambda: self.listMenu('next'))
+        self.listButton_prev.clicked.connect(lambda: self.listMenu('prev'))
+        # Кнопка вызова справки
+        self.helpGroundButton.clicked.connect(self.groundHelp)
         # Кнопка расчета критического пути
         self.actionButton.clicked.connect(self.findPath)
         # Кнопка очистки нарисованых путей
         self.clearButton.clicked.connect(self.clearPath)
+        # Кнопка сохранения
+        self.saveButton.clicked.connect(lambda: saving.save(self,self.field))
+        # Кнопка загрузки
+        self.loadButton.clicked.connect(lambda: saving.load(self))
 
 
     # Функция бесконечного перелистывания инженерных средств
-    def listMenu(self):
+    def listMenu(self, direction):
 
         current_page = self.stackedWidget.currentIndex()
         max_pages = self.stackedWidget.count()
-        current_page += 1
-        if current_page > max_pages-1:
-            current_page = 0
+        if direction == 'next':
+            current_page += 1
+            if current_page > max_pages-1:
+                current_page = 0
+        else:
+            current_page -= 1
+            if current_page < 0:
+                current_page = max_pages-1
         self.stackedWidget.setCurrentIndex(current_page)
 
     # Функция пересчета типа почвы в длину прохождения ячеек при подкопе
@@ -114,8 +128,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                     else:
                         self.field[x][y].cost[0] = 12.5*3600
             except:
-                self.log_file.write('Ошибка расчета времени подкопа\n')
-                self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+                with open('logs', 'a') as log_file:
+                    log_file.write('Ошибка расчета времени подкопа\n')
+                    log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
                 
 
     # Функция поиска пути
@@ -150,8 +165,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             for intruder in self.intruders:
                 start_nodes.append((intruder[0], intruder[1]))
         except:
-            self.log_file.write('Ошибка в получении координат нарушителя\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+            with open('logs', 'a') as log_file:
+                log_file.write('Ошибка в получении координат нарушителя\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
         # Получаем координаты ПФЗ
         try:
@@ -159,19 +175,23 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             for PFZ in self.PFZs:
                 end_nodes.append((PFZ[0], PFZ[1]))
         except:
-            self.log_file.write('Ошибка в получении координат ПФЗ\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+            with open('logs', 'a') as log_file:
+                log_file.write('Ошибка в получении координат ПФЗ\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
         # Ищем все комбинации Нарушитель-ПФЗ
         intruder_cost = [np.inf] # Задаем бесконечность для последующего уменьшения
         intruder_least_path = None
-        for start_node in start_nodes:
-            for end_node in end_nodes:
-                search_result = path.search(matrix_intruder, start_node, end_node)
-                total_path, total_cost = search_result[0], search_result[1] # Последнее число в total_cost равно всем затратам на путь
-                if total_cost[-1] < intruder_cost[-1]:
-                    intruder_cost = total_cost
-                    intruder_least_path = total_path
+        try:
+            for start_node in start_nodes:
+                for end_node in end_nodes:
+                    search_result = path.search(matrix_intruder, start_node, end_node)
+                    total_path, total_cost = search_result[0], search_result[1] # Последнее число в total_cost равно всем затратам на путь
+                    if total_cost[-1] < intruder_cost[-1]:
+                        intruder_cost = total_cost
+                        intruder_least_path = total_path
+        except:
+            self.outputLabel.setText('Нет пути нарушитель-ПФЗ')
                     
         tg_least_path = None
         # Ищем критический путь для ТГ
@@ -182,8 +202,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 search_result = path.search(matrix_tg, self.startTG_coordinate, self.endTG_coordinate)
                 tg_least_path, tg_cost = search_result[0], search_result[1]
             except:
-                self.log_file.write('Ошибка ТГ: последовательная тактика\n')
-                self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+                with open('logs', 'a') as log_file:
+                    log_file.write('Ошибка ТГ: последовательная тактика\n')
+                    log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
                 
         # С выходом на рубеж
         elif self.intermediateTactic.isChecked():
@@ -222,15 +243,17 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                                 tg_cost.append(tg_cost[-1]+point_cost+path.step_cost)
 
             except:
-                self.log_file.write('Ошибка ТГ: тактика выход на рубеж\n')
-                self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+                with open('logs', 'a') as log_file:
+                    log_file.write('Ошибка ТГ: тактика выход на рубеж\n')
+                    log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
         # Находим точку пересечения нарушителя и ТГ
         try:
             self.meet_point = self.detectIntruder(intruder_least_path, intruder_cost, tg_least_path, tg_cost)
         except:
-            self.log_file.write('Ошибка взаимодействия ТГ и нарушителя\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+            with open('logs', 'a') as log_file:
+                log_file.write('Ошибка взаимодействия ТГ и нарушителя\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
         try:
             # Отрисовка найденого пути
@@ -252,8 +275,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
 
         except:
-            self.log_file.write('Путь не найден\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+            with open('logs', 'a') as log_file:
+                log_file.write('Путь не найден\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
         
 
     # Функция отрисовки пути
@@ -296,17 +320,17 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 path_indicator.setStyleSheet(tg_path_css)
                 self.tg_path.append(path_indicator)
         except:
-            self.log_file.write('Невозможно нарисовать путь тревожной группы\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+            with open('logs', 'a') as log_file:
+                log_file.write('Невозможно нарисовать путь тревожной группы\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
         
         # Рисуем точку пересечения Нарушителя и ТГ
         try:
             self.drawMeeting(self.meet_point)
         except:
-            self.log_file.write('Нет места встречи нарушителя и ТГ\n')
-            self.log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
-
-
+            with open('logs', 'a') as log_file:
+                log_file.write('Нет места встречи нарушителя и ТГ\n')
+                log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
                 
     # Функция очистки нарисованных путей
@@ -373,6 +397,26 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.meet_indicator.raise_()
 
 
+    # Вывод справки
+    def groundHelp(self):
+               
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Справка')
+        dialog.resize(450,300)
+        dialog.label = QLabel(dialog)
+        dialog.label.setText('Здесь какой то текст')
+        dialog.label.move(10,30)
+        dialog.label.resize(430,270)
+        dialog.label.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        dialog.button = QPushButton(dialog)
+        dialog.button.clicked.connect(dialog.hide)
+        dialog.button.move(190,260)
+        dialog.button.resize(75,30)
+        dialog.button.setText('✓ OK')
+        dialog.exec_()
+
+
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = App()
@@ -385,6 +429,6 @@ if __name__ == '__main__':
 # Исправилю ещё ошибки с x-y (пусть и не мешают, но некрасиво)
 # Внимательно посмотрю, что можно улучшить
 # и надо ли? По времени все на алгоритм все равно уходит
-# Жду от тебя справку и подробный расчет взаимодействия
+# Справку и подробный расчет взаимодействия
 
 # !!!!!!!! Если увидишь ошибки или вдруг вылетит сразу пиши
