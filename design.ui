@@ -150,7 +150,8 @@
       <string>Справка</string>
      </property>
      <property name="icon">
-      <iconset theme="help-about"/>
+      <iconset theme="help-about">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </widget>
@@ -172,11 +173,11 @@
        <x>10</x>
        <y>10</y>
        <width>441</width>
-       <height>271</height>
+       <height>281</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <widget class="QRadioButton" name="woodDoor">
@@ -708,7 +709,7 @@
         <rect>
          <x>20</x>
          <y>160</y>
-         <width>211</width>
+         <width>221</width>
          <height>22</height>
         </rect>
        </property>
@@ -914,34 +915,23 @@
         <string notr="true">buttonGroup</string>
        </attribute>
       </widget>
+      <widget class="QRadioButton" name="gatewayFacility">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>250</y>
+         <width>151</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Шлюз</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
      </widget>
-    </widget>
-    <widget class="QPushButton" name="listButton_next">
-     <property name="geometry">
-      <rect>
-       <x>440</x>
-       <y>10</y>
-       <width>20</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {border:  none}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset theme="go-next"/>
-     </property>
     </widget>
     <widget class="QPushButton" name="listButton_prev">
      <property name="geometry">
@@ -967,7 +957,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset theme="go-previous"/>
+      <iconset theme="go-previous">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </widget>
@@ -1207,7 +1198,8 @@ QRadioButton::indicator::checked {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>pictures/save.png</normaloff>pictures/save.png</iconset>
+      <normaloff>pictures/save.png</normaloff>
+      <normalon>pictures/save.png</normalon>pictures/save.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1237,6 +1229,34 @@ QRadioButton::indicator::checked {
       <width>24</width>
       <height>24</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="listButton_next">
+    <property name="geometry">
+     <rect>
+      <x>1165</x>
+      <y>110</y>
+      <width>20</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {border:  none}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="go-next">
+      <normaloff>.</normaloff>.</iconset>
     </property>
    </widget>
   </widget>

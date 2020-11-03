@@ -18,7 +18,12 @@ class Cell(QPushButton):
         self.modifies_flags = { 'video': 0,
                                 'glass': 0,
                                 'capacity': 0,
-                                'radio': 0,}
+                                'radio': 0,
+                                'ir': 0,
+                                'bomb': 0,
+                                'warm': 0,
+                                'gerkon': 0,
+                                'piezo': 0}
         # Шанс необнаружения
         self.detect_prob = 1
 
@@ -56,6 +61,26 @@ class Cell(QPushButton):
             # Радиолучевое средство обнаружения
             self.received_code[2] = 4
 
+        elif self.parent().irFacility.isChecked():
+            # ИК-датчик
+            self.received_code[2] = 5
+
+        elif self.parent().bombFacility.isChecked():
+            # Обнаружитель ВВ
+            self.received_code[2] = 6
+
+        elif self.parent().warmFacility.isChecked():
+            # Тепловой датчик
+            self.received_code[2] = 7
+
+        elif self.parent().gerkonFacility.isChecked():
+            # Герконовый датчик
+            self.received_code[2] = 8
+
+        elif self.parent().piezoFacility.isChecked():
+            # Пьезо датчик
+            self.received_code[2] = 9
+
         #
         # Неподвижные объекты
         #
@@ -66,19 +91,29 @@ class Cell(QPushButton):
             self.received_code[0] = 1
             self.received_code[1] = None
 
+        elif self.parent().gatewayFacility.isChecked():
+            # Шлюз
+            self.received_code[0] = 2
+            self.received_code[1] = None
+
+        elif self.parent().elmechFacility.isChecked():
+            # ЭМ замок
+            self.received_code[0] = 3
+            self.received_code[1] = None
+
         elif self.parent().wall.isChecked():
             # Стена
-            self.received_code[0] = 2
+            self.received_code[0] = 4
             self.received_code[1] = None
         
         elif self.parent().passage.isChecked():
             # Проход
-            self.received_code[0] = 3
+            self.received_code[0] = 5
             self.received_code[1] = None
             
         elif self.parent().woodDoor.isChecked():
             # Деревянная дверь
-            self.received_code[0] = 4
+            self.received_code[0] = 6
             self.received_code[1] = None          
             current_text = self.parent().woodBox.currentText()
             if current_text == 'Выбивание':
@@ -94,7 +129,7 @@ class Cell(QPushButton):
             
         elif self.parent().woodMetalDoor.isChecked():
             # Деревянная дверь, обитая металлом
-            self.received_code[0] = 5
+            self.received_code[0] = 7
             self.received_code[1] = None 
             current_text = self.parent().woodMetalBox.currentText()
             if current_text == 'Выбивание':
@@ -112,7 +147,7 @@ class Cell(QPushButton):
         elif self.parent().metalDoor.isChecked():
             # Металлическая дверь
             current_text = self.parent().metalBox.currentText()
-            self.received_code[0] = 6
+            self.received_code[0] = 8
             self.received_code[1] = None
             if current_text == 'Выбивание':
                 self.received_code[1] = 1
@@ -129,7 +164,7 @@ class Cell(QPushButton):
             
         elif self.parent().window.isChecked():
             # Окно
-            self.received_code[0] = 7
+            self.received_code[0] = 9
             self.received_code[1] = None
             current_text = self.parent().windowBox.currentText()
             if current_text == 'Пролом стекла А1-А3':
@@ -143,7 +178,7 @@ class Cell(QPushButton):
             
         elif self.parent().concrete.isChecked():
             # Бетонное ограждение
-            self.received_code[0] = 8
+            self.received_code[0] = 10
             self.received_code[1] = None
             current_text = self.parent().concreteBox.currentText()
             if current_text == 'Перелаз':
@@ -153,7 +188,7 @@ class Cell(QPushButton):
             
         elif self.parent().concreteAKP.isChecked():
             # Бетонное ограждение c АКП
-            self.received_code[0] = 9
+            self.received_code[0] = 11
             self.received_code[1] = None
             current_text = self.parent().concreteAKPBox.currentText()
             if current_text == 'Перелаз':
@@ -163,7 +198,7 @@ class Cell(QPushButton):
             
         elif self.parent().gridWall.isChecked():
             # Сетчатое заграждение
-            self.received_code[0] = 10
+            self.received_code[0] = 12
             self.received_code[1] = None
             current_text = self.parent().gridWallBox.currentText()
             if current_text == 'Перелаз':
@@ -175,7 +210,7 @@ class Cell(QPushButton):
             
         elif self.parent().barbedWall.isChecked():
             # Колючая проволока
-            self.received_code[0] = 11
+            self.received_code[0] = 13
             self.received_code[1] = None
             current_text = self.parent().barbedWallBox.currentText()
             if current_text == 'Перелаз':
@@ -184,28 +219,34 @@ class Cell(QPushButton):
                 self.received_code[1] = 2
             elif current_text == 'Подкоп':
                 self.received_code[1] = 3
+        
+        elif self.parent().antiram.isChecked():
+            # Противотаранное устройство
+            self.received_code[0] = 14
+            self.received_code[1] = None
             
+
         #
         # Передвижные объекты
         #
         elif self.parent().intruder.isChecked():
             # Нарушитель
-            self.received_code[0] = 12
+            self.received_code[0] = 15
             self.received_code[1] = None
             
         elif self.parent().PFZ.isChecked():
             # ПФЗ
-            self.received_code[0] = 13
+            self.received_code[0] = 16
             self.received_code[1] = None
             
         elif self.parent().startTG.isChecked():
             # Начальная точка тревожной группы
-            self.received_code[0] = 14
+            self.received_code[0] = 17
             self.received_code[1] = None
             
         elif self.parent().endTG.isChecked():
             # Конечная точка тревожной группы
-            self.received_code[0] = 15
+            self.received_code[0] = 18
             self.received_code[1] = None
 
         #
@@ -251,9 +292,44 @@ class Cell(QPushButton):
             if not self.modifies_flags['radio']:
                 self.modifies_flags['radio'] = 1
                 self.detect_prob *= self.detect_prob*(1-0.95)
+                self.drawFacility('brown', 2)
+
+        elif received_code[2] == 5:
+            # ИК-датчик
+            if not self.modifies_flags['ir']:
+                self.modifies_flags['ir'] = 1
+                self.detect_prob *= self.detect_prob*(1-1)
                 self.drawFacility('blue', 2)
 
+        elif received_code[2] == 6:
+            # Обнаружитель ВВ
+            if not self.modifies_flags['bomb']:
+                self.modifies_flags['bomb'] = 1
+                self.detect_prob *= self.detect_prob*(1-0.95)
+                self.drawFacility('red', 2)
+
+        elif received_code[2] == 7:
+            # Тепловой датчик
+            if not self.modifies_flags['warm']:
+                self.modifies_flags['warm'] = 1
+                self.detect_prob *= self.detect_prob*(1-0.95)
+                self.drawFacility('brown', 3)
+
+        elif received_code[2] == 8:
+            # Герконовый датчик
+            if not self.modifies_flags['gerkon']:
+                self.modifies_flags['gerkon'] = 1
+                self.detect_prob *= self.detect_prob*(1-1)
+                self.drawFacility('blue', 3)
+
+        elif received_code[2] == 9:
+            # Пьезо датчик
+            if not self.modifies_flags['piezo']:
+                self.modifies_flags['piezo'] = 1
+                self.detect_prob *= self.detect_prob*(1-0.95)
+                self.drawFacility('red', 3)
         
+
         # Чтобы не оставлять лишние клетки с подкопом и турникетом
         if 1 not in self.modifies_flags.values():
             if (self.x, self.y) in self.parent().diggings:
@@ -272,19 +348,30 @@ class Cell(QPushButton):
             self.cost = [-1,6,0]
             self.setText('T')
 
-
         elif received_code[0] == 2:
+            # Шлюз
+            self.style = 'QPushButton {background-color: white; color:black; border-color:  white; border-radius: 5}'
+            self.cost = [-1,6,0]
+            self.setText('Ш')
+
+        elif received_code[0] == 3:
+            # Шлюз
+            self.style = 'QPushButton {background-color: white; color:black; border-color:  white; border-radius: 5}'
+            self.cost = [-1,6,0]
+            self.setText('L')
+
+        elif received_code[0] == 4:
             # Стена
             self.style = 'QPushButton {background-image: url(pictures/WallPic.png); border-color:  black; border-radius: 5}'
             self.cost = [4,-1,4]
-            
+
         
-        elif received_code[0] == 3:
+        elif received_code[0] == 5:
             # Проход
             self.style = 'QPushButton {background-image: url(pictures/EntryPic.png); border-color:  black; border-radius: 5}'
             self.cost = [3,6,3]
             
-        elif received_code[0] == 4:
+        elif received_code[0] == 6:
             # Деревянная дверь        
             if received_code[1] == 1:
                 self.cost = [15,6,3]
@@ -299,7 +386,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/WDoorPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 5:
+        elif received_code[0] == 7:
             # Деревянная дверь, обитая металлом
             current_text = self.parent().woodMetalBox.currentText()
             if received_code[1] == 1:
@@ -316,7 +403,7 @@ class Cell(QPushButton):
                 self.style = 'QPushButton {background-image: url(pictures/WMeDoorPic.png); border-color:  black; border-radius: 5}'
 
             
-        elif received_code[0] == 6:
+        elif received_code[0] == 8:
             # Металлическая дверь
             if received_code[1] == 1:
                 self.cost = [40,6,3]
@@ -333,7 +420,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/MeDoorPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 7:
+        elif received_code[0] == 9:
             # Окно
             if received_code[1] == 1:
                 self.cost = [5,-1,3]
@@ -346,7 +433,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/WindowPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 8:
+        elif received_code[0] == 10:
             # Бетонное ограждение
             if received_code[1] == 1:
                 self.cost = [5,-1,5]
@@ -356,7 +443,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/BarrPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 9:
+        elif received_code[0] == 11:
             # Бетонное ограждение c АКП
             if received_code[1] == 1:
                 self.cost = [5,-1,5]
@@ -366,7 +453,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/BarrAKLPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 10:
+        elif received_code[0] == 12:
             # Сетчатое заграждение
             if received_code[1] == 1:
                 self.cost = [5,-1,5]
@@ -378,7 +465,7 @@ class Cell(QPushButton):
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/BarrChainPic.png); border-color:  black; border-radius: 5}'
             
-        elif received_code[0] == 11:
+        elif received_code[0] == 13:
             # Колючая проволока
             if received_code[1] == 1:
                 self.cost = [7,-1,5]
@@ -389,31 +476,36 @@ class Cell(QPushButton):
                 self.cost = [None,-1,3]
             if received_code[1]:
                 self.style = 'QPushButton {background-image: url(pictures/AKLPic.png); border-color:  black; border-radius: 5}'
+
+        elif received_code[0] == 14:
+            # Противотаранное устройство
+            self.style = 'QPushButton {background-color: purple; color:black; border-color:  white; border-radius: 5}'
+            self.cost = [-1,-1,-1]
             
         #
         # Передвижные объекты
         #
-        elif received_code[0] == 12:
+        elif received_code[0] == 15:
             # Нарушитель
             self.style = 'QPushButton {background-color: red; border-color:  black; border-radius: 5}'
             if (self.x, self.y) not in super().parent().intruders:
                 super().parent().intruders.append((self.x, self.y))
             
-        elif received_code[0] == 13:
+        elif received_code[0] == 16:
             # ПФЗ
             received_code[1] = None
             self.style = 'QPushButton {background-color: green; border-color:  black; border-radius: 5}'
             if (self.x, self.y) not in super().parent().PFZs:
                 super().parent().PFZs.append((self.x, self.y))
             
-        elif received_code[0] == 14:
+        elif received_code[0] == 17:
             # Начальная точка тревожной группы
             if super().parent().startTG_coordinate != None:
                 super().parent().field[super().parent().startTG_coordinate[1]][super().parent().startTG_coordinate[0]].setStyleSheet(self.default_style)
             self.style = 'QPushButton {background-color: lightblue; border-color:  black; border-radius: 5}'
             super().parent().startTG_coordinate = (self.x, self.y)
             
-        elif received_code[0] == 15:
+        elif received_code[0] == 18:
             # Конечная точка тревожной группы
             if super().parent().endTG_coordinate != None:
                 super().parent().field[super().parent().endTG_coordinate[1]][super().parent().endTG_coordinate[0]].setStyleSheet(self.default_style)
