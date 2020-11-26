@@ -41,7 +41,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.show()
 
     # Функция добавления дополнительных элементов
-    def UiComponents(self, cols=44, rows=40):
+    def UiComponents(self, cols=45, rows=47):
 
         # Рисуем поле
         self.field = []
@@ -49,7 +49,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             self.field.append([])
             for row in range(rows):
                 cell = Cell(self, row, col)
-                cell.move(30+16*row,70+16*col)
+                cell.move(1+14*row,40+14*col)
                 cell.clicked.connect(cell.click)
                 self.field[-1].append(cell)
         #
@@ -295,8 +295,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             x = position[1]; y = position[0]
             path_indicator = QPushButton(self)
             path_indicator.resize(7,7)
-            path_indicator.move(34+16*x,74+16*y)
-
+            path_indicator.move(4+14*x,43+14*y)
             # Вынесение на передний план
             path_indicator.show()
             path_indicator.raise_()
@@ -311,7 +310,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 x = position[1]; y = position[0]
                 path_indicator = QPushButton(self)
                 path_indicator.resize(7,7)
-                path_indicator.move(34+16*x,74+16*y)
+                path_indicator.move(4+14*x,43+14*y)
 
                 # Вынесение на передний план
                 path_indicator.show()
@@ -389,7 +388,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def drawMeeting(self, point):
         self.meet_indicator = QPushButton(self)
         self.meet_indicator.resize(15,15)
-        self.meet_indicator.move(30+16*point[1],70+16*point[0])
+        self.meet_indicator.move(14*point[1],40+14*point[0])
         self.meet_indicator.setText('✘')
         self.meet_indicator.setStyleSheet('''QPushButton {background-color: white;
             font-size: 16px; font-weight: bold; color: red; border-color:  black; border-radius: 5}''')

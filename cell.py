@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QPushButton
 class Cell(QPushButton):
     def __init__(self, parent, x, y):
         super(Cell, self).__init__(parent)
-        self.resize(15,15)
+        self.resize(13,13)
 
         # Свойства ячейки
         # На путь между клетками тратится 3 сек
@@ -33,7 +33,7 @@ class Cell(QPushButton):
         self.received_code = [None, None, None]
 
         # CSS стиль ячейки
-        self.default_style = 'QPushButton {background-color: rgb(210,210,210); border-color:  black; border-radius: 5}'
+        self.default_style = 'QPushButton {background-color: rgb(210,210,210); border-color:  black; border-radius: 3}'
         self.style = self.default_style
         self.setStyleSheet(self.default_style)
 
@@ -124,7 +124,7 @@ class Cell(QPushButton):
                 self.received_code[1] = 3
             elif current_text == 'Отжим двери':
                 self.received_code[1] = 4
-            elif currcurrent_textentText == 'Отжим ригеля':
+            elif current_text == 'Отжим ригеля':
                 self.received_code[1] = 5
             
         elif self.parent().woodMetalDoor.isChecked():
@@ -544,7 +544,7 @@ class Cell(QPushButton):
     def drawFacility(self,color,margin):
         facility_indicator = QPushButton(self)
         facility_indicator.move(margin,margin)
-        facility_indicator.resize(15-margin*2,15-margin*2)
+        facility_indicator.resize(13-margin*2,13-margin*2)
         facility_indicator.setStyleSheet('''QPushButton {
             border: 1px solid '''+ color + ''';
             border-radius: 1px;
