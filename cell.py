@@ -8,7 +8,7 @@ class Cell(QPushButton):
 
         # Свойства ячейки
         # На путь между клетками тратится 3 сек
-        self.cost = [0,6,0] # Первое число для нарушителя, второе – для ТГ, третье – для движения ТГ по следам нарушителя
+        self.cost = [0,0,0] # Первое число для нарушителя, второе – для ТГ, третье – для движения ТГ по следам нарушителя
         self.x = x
         self.y = y
 
@@ -534,7 +534,7 @@ class Cell(QPushButton):
                 self.modifies[-1].setParent(None)
                 self.modifies.remove(self.modifies[-1])
             
-            self.cost = [0,6,0]
+            self.cost = [0,0,0]
             self.detect_prob = 1
             self.setText('')
                 

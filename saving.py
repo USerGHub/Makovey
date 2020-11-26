@@ -33,7 +33,7 @@ def load(parent):
     try:
         field = parent.field
         parent.clearPath()
-        parent.outputLabel.setText('')
+        parent.outputButton.setText('')
         load_file = QFileDialog.getOpenFileName(filter='PIE save (*.pie)')[0]
         with open(load_file, 'r') as file:
             load_file = file.readlines()
@@ -59,4 +59,4 @@ def load(parent):
                 i += 1
     except:
         with open('logs', 'a') as log_file:
-            log_file.write('Ошибка файла загрузки')
+            log_file.write('Ошибка файла загрузки\n')

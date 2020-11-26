@@ -1,6 +1,8 @@
 import sys
 from random import random
+from time import time
 import traceback # Тестирование
+
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QIcon
@@ -31,7 +33,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # Ячейки с подкопами
         self.diggings = []
         # Строка вывода
-        self.outputLabel.setText('')
+        self.outputButton.setText('')
         # Отрисовка дополнительных компонентов
         self.UiComponents()
         # 
@@ -58,14 +60,18 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.listButton_prev.clicked.connect(lambda: self.listMenu('prev'))
         # Кнопка вызова справки
         self.helpGroundButton.clicked.connect(self.groundHelp)
+        # Кнопка вызова полного отчета
+        self.outputButton.clicked.connect(self.fullReport)
         # Кнопка расчета критического пути
         self.actionButton.clicked.connect(self.findPath)
         # Кнопка очистки нарисованых путей
         self.clearButton.clicked.connect(self.clearPath)
         # Кнопка сохранения
         self.saveButton.clicked.connect(lambda: saving.save(self,self.field))
+        self.saveButton.setIcon(QIcon('pictures/save.png'))
         # Кнопка загрузки
         self.loadButton.clicked.connect(lambda: saving.load(self))
+        self.loadButton.setIcon(QIcon('pictures/open.png'))
 
 
     # Функция бесконечного перелистывания инженерных средств
@@ -136,8 +142,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     # Функция поиска пути
     def findPath(self, start=None, end=None):
 
-        # Оставляем место для последующих выводов
-        # print('\n\n\n')
+        self.start_time = time()
         # Обрабатываем почву для подкопов
         self.diggiCalculation(self.diggings)
         # Формируем матрицу из весов клеток
@@ -180,18 +185,18 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
 
         # Ищем все комбинации Нарушитель-ПФЗ
-        intruder_cost = [np.inf] # Задаем бесконечность для последующего уменьшения
+        self.intruder_cost = [np.inf] # Задаем бесконечность для последующего уменьшения
         intruder_least_path = None
         try:
             for start_node in start_nodes:
                 for end_node in end_nodes:
                     search_result = path.search(matrix_intruder, start_node, end_node)
                     total_path, total_cost = search_result[0], search_result[1] # Последнее число в total_cost равно всем затратам на путь
-                    if total_cost[-1] < intruder_cost[-1]:
-                        intruder_cost = total_cost
+                    if total_cost[-1] < self.intruder_cost[-1]:
+                        self.intruder_cost = total_cost
                         intruder_least_path = total_path
         except:
-            self.outputLabel.setText('Нет пути нарушитель-ПФЗ')
+            self.outputButton.setText('Нет пути нарушитель-ПФЗ')
                     
         tg_least_path = None
         # Ищем критический путь для ТГ
@@ -200,7 +205,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         if self.consistentTactic.isChecked():
             try:
                 search_result = path.search(matrix_tg, self.startTG_coordinate, self.endTG_coordinate)
-                tg_least_path, tg_cost = search_result[0], search_result[1]
+                tg_least_path, self.tg_cost = search_result[0], search_result[1]
             except:
                 with open('logs', 'a') as log_file:
                     log_file.write('Ошибка ТГ: последовательная тактика\n')
@@ -209,38 +214,45 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # С выходом на рубеж
         elif self.intermediateTactic.isChecked():
             try:
+                # Объявление точки обнаружения
+                self.detect_point = None
+                self.time_before_detect = None
                 # Находим путь ТГ
                 search_result = path.search(matrix_tg, self.startTG_coordinate, self.endTG_coordinate)
-                tg_least_path, tg_cost = search_result[0], search_result[1]
+                tg_least_path, self.tg_cost = search_result[0], search_result[1]
                 # Ищем средства обнаружения на пути нарушителя
                 for position in intruder_least_path:
                     cell = self.field[position[0]][position[1]]
                     if cell.detect_prob != 1:
                         # Проверяем, сработало ли средство
                         if cell.detect_prob < random():
+                            # Помечаем точку обнаружения
+                            self.detect_point = position
                             # Находим точку, где была ТГ в момент срабатывания
                             facility_index = intruder_least_path.index(position)
-                            path_cost = intruder_cost[facility_index]
-                            for i,cost in enumerate(tg_cost):
+                            path_cost = self.intruder_cost[facility_index]
+                            for i,cost in enumerate(self.tg_cost):
                                 if cost >= path_cost:
-                                    tg_cost = tg_cost[:i]
-                                    tg_least_path = tg_least_path[:len(tg_cost)]
+                                    self.tg_cost = self.tg_cost[:i]
+                                    tg_least_path = tg_least_path[:len(self.tg_cost)]
                                     break
-                            if len(tg_cost) == 0:
-                                tg_cost = [0]
+                            # Время обнаружения
+                            self.time_before_detect = path_cost
+                            if len(self.tg_cost) == 0:
+                                self.tg_cost = [0]
 
                             # ТГ реагирует в момент обнаружения нарушителя
-                            tg_cost[-1] = path_cost 
+                            self.tg_cost[-1] = path_cost 
                             # Ищем путь от точки, где была ТГ до средства обнаружения до средства обнаружения
                             # Реверс из-за ошибки с x-y
                             search_result = path.search(matrix_tg_fast, tg_least_path[-1][::-1], (cell.x, cell.y))
                             tg_least_path = tg_least_path[:-1] + search_result[0]
-                            tg_cost = tg_cost + [cost + tg_cost[-1] for cost in search_result[1]]
+                            self.tg_cost = self.tg_cost + [cost + self.tg_cost[-1] for cost in search_result[1]]
                             # Дальше отправляем ТГ по следу нарушителя
                             for point in intruder_least_path[facility_index+1:]:
                                 tg_least_path.append(point)
                                 point_cost = self.field[point[0]][point[1]].cost[2]
-                                tg_cost.append(tg_cost[-1]+point_cost+path.step_cost)
+                                self.tg_cost.append(self.tg_cost[-1]+point_cost+path.step_cost)
 
             except:
                 with open('logs', 'a') as log_file:
@@ -249,7 +261,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
         # Находим точку пересечения нарушителя и ТГ
         try:
-            self.meet_point = self.detectIntruder(intruder_least_path, intruder_cost, tg_least_path, tg_cost)
+            self.meet_point = self.detectIntruder(intruder_least_path, self.intruder_cost, tg_least_path, self.tg_cost)
         except:
             with open('logs', 'a') as log_file:
                 log_file.write('Ошибка взаимодействия ТГ и нарушителя\n')
@@ -259,25 +271,31 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             # Отрисовка найденого пути
             self.drawPath(intruder_least_path, tg_least_path) 
             # Вывод длины наименьшего пути
-            self.outputLabel.setText(f'Время пути нарушителя: {intruder_cost[-1]} сек.')
-            self.outputLabel.setText(f'{self.outputLabel.text()}\n'
-                                     f'Время пути ТГ: {tg_cost[-1]} сек.')
+            self.outputButton.setText(f'Время пути нарушителя: {self.intruder_cost[-1]} сек.')
+
+            self.outputButton.setText(f'{self.outputButton.text()}\n'
+                                     f'Время пути ТГ: {self.tg_cost[-1]} сек.')
             # Минимальная разница во времени между ТГ и нарушителем
             if self.cost_differents:
                 self.cost_differents.sort()
                 different = self.cost_differents[0]
                 if different[1] == '+':
-                     self.outputLabel.setText(f'{self.outputLabel.text()}\n'
+                     self.outputButton.setText(f'{self.outputButton.text()}\n'
                                               f'ТГ опоздала на {different[0]} сек.')
                 elif different[1] == '-':
-                    self.outputLabel.setText(f'{self.outputLabel.text()}\n'
+                    self.outputButton.setText(f'{self.outputButton.text()}\n'
                                               f'ТГ поспешила на {different[0]} сек.')
+            else:
+                self.outputButton.setText(f'{self.outputButton.text()}\n'
+                                        f'Нарушитель задержан в точке ({self.meet_point[1]+1},{self.meet_point[0]+1})')
 
 
         except:
             with open('logs', 'a') as log_file:
                 log_file.write('Путь не найден\n')
                 log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
+        
+        self.end_time = time()
         
 
     # Функция отрисовки пути
@@ -335,6 +353,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     # Функция очистки нарисованных путей
     def clearPath(self):
         try:
+            self.outputButton.setText('')
             for position in self.intruder_path:
                 position.setParent(None)
             for position in self.tg_path:
@@ -348,6 +367,8 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def detectIntruder(self, intruder_path, intruder_cost, tg_path, tg_cost):
         # Глобальная переменная для вычисления наименьшей разницы во времени
         self.cost_differents = []
+        # Время до обнаружения нарушителя
+        self.time_before_meet = None
         for node in tg_path:
             # Локальная переменная для вычисления наименьшей разницы во времени
             cost_different = None
@@ -355,7 +376,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             if node in intruder_path:
                 intruder_index = intruder_path.index(node)
                 tg_index = tg_path.index(node)
-                cost_different = tg_cost[tg_index]-intruder_cost[intruder_index]
+                cost_different = self.tg_cost[tg_index]-self.intruder_cost[intruder_index]
                 if cost_different < 0:
                     self.cost_differents.append((-cost_different, '-'))
                 else:
@@ -363,25 +384,29 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 # Если встретились в одно время в одном месте, то запоминаем место
                 # Делаем небольшой промежуток по времени, чтобы не было жесткого условия равенства
                 # у которого есть шанс не выполняться
-                if intruder_index+1 < len(intruder_cost):
-                    if (tg_cost[tg_index] <= intruder_cost[intruder_index+1] and
-                        tg_cost[tg_index] >= intruder_cost[intruder_index]):
+                if intruder_index+1 < len(self.intruder_cost):
+                    if (self.tg_cost[tg_index] <= self.intruder_cost[intruder_index+1] and
+                        self.tg_cost[tg_index] >= self.intruder_cost[intruder_index]):
                         self.cost_differents = None
+                        self.time_before_meet = self.intruder_cost[intruder_index]
                         return node
                 else:
-                    if (tg_cost[tg_index] <= intruder_cost[intruder_index] and
-                        tg_cost[tg_index] >= intruder_cost[intruder_index-1]):
+                    if (self.tg_cost[tg_index] <= self.intruder_cost[intruder_index] and
+                        self.tg_cost[tg_index] >= self.intruder_cost[intruder_index-1]):
                         self.cost_differents = None
+                        self.time_before_meet = self.intruder_cost[intruder_index]
                         return node
-                if tg_index+1 < len(tg_cost):
-                    if (intruder_cost[intruder_index] <= tg_cost[tg_index+1] and
-                        intruder_cost[intruder_index] >= tg_cost[tg_index]):
+                if tg_index+1 < len(self.tg_cost):
+                    if (self.intruder_cost[intruder_index] <= self.tg_cost[tg_index+1] and
+                        self.intruder_cost[intruder_index] >= self.tg_cost[tg_index]):
                         self.cost_differents = None
+                        self.time_before_meet = self.intruder_cost[intruder_index]
                         return node
                 else:
-                    if (intruder_cost[intruder_index] <= tg_cost[tg_index] and
-                        intruder_cost[intruder_index] >= tg_cost[tg_index-1]):
+                    if (self.intruder_cost[intruder_index] <= self.tg_cost[tg_index] and
+                        self.intruder_cost[intruder_index] >= self.tg_cost[tg_index-1]):
                         self.cost_differents = None
+                        self.time_before_meet = self.intruder_cost[intruder_index]
                         return node
 
     # Отрисовываем место встречи
@@ -401,19 +426,98 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                
         dialog = QDialog(self)
         dialog.setWindowTitle('Справка')
-        dialog.resize(450,300)
+        dialog.resize(800,450)
         dialog.label = QLabel(dialog)
-        dialog.label.setText('Здесь какой то текст')
+        help_text = '''Слабый грунт тип 1: грунт растительного слоя без корней и примесей; торф без корней; лёсс, песок и суспесь без примесей;
+        
+Слабый грунт тип 2: песок и суспесь с примесями гравия, гальки, валунов до 10% по объему; грунт растительного слоя с корнями примесью гальки или гравия; торф с корнями кустарника, чернозем мягкий с корнями кустарника;
+        
+Средний грунт тип 1: глина жирная и мягкая с примесью гальки до 10%; суглинок тяжелый без примесей; 
+    
+Средний грунт тип 2: чернозем отвердевший; суспесь с примесью более 30% по объему, лёсс отвердевший; гравийно-галечные грунты; 
+    
+Твердый грунт тип 1: глина тяжелая твердая; суглинок тяжелый и глина с примесью гальки, гравия, валунов; солончак отвердевший; 
+    
+Твердый грунт тип 2: ангидрит (гипс); гравийно-галечные грунты; 
+    
+Скальный грунт тип 1: туф; пемза, граниты; гнейсы (выветрившиеся дресвяные); гипс известняк мягкий; 
+    
+Скальный грунт тип 2доломит мягкий, известняк мергелистый; 
+    
+Скальный грунт тип 3: известняк мергелистый плотный; сланцы слюдяные, мрамор; граниты; гнейсы мелкозернистые.
+            '''
+        dialog.label.setText(help_text)
+        dialog.label.setWordWrap(True)
         dialog.label.move(10,30)
-        dialog.label.resize(430,270)
+        dialog.label.resize(780,390)
         dialog.label.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         dialog.button = QPushButton(dialog)
         dialog.button.clicked.connect(dialog.hide)
-        dialog.button.move(190,260)
+        dialog.button.move(360,420)
         dialog.button.resize(75,30)
         dialog.button.setText('✓ OK')
         dialog.exec_()
 
+# Вывод полного отчета
+    def fullReport(self):
+               
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Отчет')
+        dialog.resize(460,350)
+        dialog.label = QLabel(dialog)
+        report_text = []
+        # Информация об обнаружении
+        if self.intermediateTactic.isChecked():
+            try:
+                report_text.append(f'Точка обнаружения нарушителя ({self.detect_point[1]+1},{self.detect_point[0]+1})')
+                report_text.append(f'Время обнаружения: {self.time_before_detect} сек.\n')
+            except:
+                report_text.append(f'Нарушитель не обнаружен\n')
+        else:
+            pass
+
+        # Информация о задержании
+        try:
+            report_text.append(f'Нарушитель задержан в точке ({self.meet_point[1]+1},{self.meet_point[0]+1})')
+            report_text.append(f'Время до задержания: {self.time_before_meet} сек.\n')
+        except:
+            report_text.append(f'Нарушитель не задержан\n')
+        
+        # Информация по нарушителю
+        try:
+            report_text.append(f'Время действия нарушителя:')
+            report_text.append(f'\tполное: {self.intruder_cost[-1]} сек.')
+            report_text.append(f'\tбез учета времени до первого обнаружения: {self.intruder_cost[-1]-self.time_before_detect} сек.')
+            report_text.append(f'\tдо первого сигнала обнаружения: {self.time_before_detect} сек.\n')
+        except:
+            pass
+
+        # Информация по ТГ
+        try:
+            report_text.append(f'Время действия сил реагирования:')
+            report_text.append(f'\tполное: {self.tg_cost[-1]} сек.')
+            report_text.append(f'\tбез учета времени на подготовку: {self.tg_cost[-1]-self.time_before_detect} сек.\n')
+        except:
+            pass
+
+        # Информация по времени выполнения
+        try:
+            report_text.append(f'Время выполнения программы: {(self.end_time-self.start_time):.0f} сек.')
+        except:
+            pass
+
+        report_text = '\n'.join(report_text)
+        dialog.label.setText(report_text)
+        dialog.label.setWordWrap(True)
+        dialog.label.move(10,10)
+        dialog.label.resize(440,290)
+        dialog.label.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        dialog.button = QPushButton(dialog)
+        dialog.button.clicked.connect(dialog.hide)
+        dialog.button.move(200,310)
+        dialog.button.resize(75,30)
+        dialog.button.setText('✓ OK')
+        dialog.exec_()
 
 
 def main():
@@ -423,11 +527,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# Исправилю ещё ошибки с x-y (пусть и не мешают, но некрасиво)
-# Внимательно посмотрю, что можно улучшить
-# и надо ли? По времени все на алгоритм все равно уходит
-# Справку и подробный расчет взаимодействия
-
-# !!!!!!!! Если увидишь ошибки или вдруг вылетит сразу пиши
