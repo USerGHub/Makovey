@@ -20,8 +20,6 @@ class Node:
         self.cost = cost + step_cost
 
         self.g = 0  # стоимость пути от начальной вершины
-        # !!! Попробуем проигнорировать переменную h, так как по сути не нужна
-        # self.h = 0  # эвристическое приближение стоимости пути от узла до конечного узла
         self.f = 0  # минимальная стоимость перехода в соседний узел
 
     def __eq__(self, other):
@@ -34,9 +32,6 @@ def returnPath(current_node, maze):
     cost = [0]
     no_rows, no_columns = np.shape(maze)
 
-    # Инициируем лабиринт с (-1) в каждой клетке
-    result = [[-1 for i in range(no_columns)] for j in range(no_rows)]
-
     current = current_node
     while current is not None:
         path.append(current.position)
@@ -47,7 +42,6 @@ def returnPath(current_node, maze):
     # Реверс затрат
     cost = cost[1:-1]
     cost = [cost[-1]-i for i in [0]+cost][::-1]
-    
     return path, cost
 
 # Функция поиска пути
@@ -132,7 +126,7 @@ def search(maze, start, end):
         for child in children:
 
             # Если уже есть в посещенных узлах, то игнорируем
-            if len([visited_child for visited_child in visited_list if visited_child == child]) > 0:
+            if child in visited_list:
                 continue
 
             # Определяем значения f, g, h
@@ -143,30 +137,10 @@ def search(maze, start, end):
             child.f = child.g # + child.h
 
             # Если узел уже есть в посещенных, но ранее длина была меньше -- игнорируем
-            if len([i for i in yet_to_visit_list if child == i and child.g >= i.g]) > 0:
-                continue
+            if child in yet_to_visit_list:
+                index = yet_to_visit_list.index(child)
+                if child.g >= yet_to_visit_list[index].g:
+                    continue
 
             # Добавляем дочерний узел в список посещенных
             yet_to_visit_list.append(child)
-                
-
-# Оставим, чтобы при изменениях в случае необходимости протестить все в консоли
-# if __name__ == "__main__":
-
-    # maze = []
-    # for i in range(5):
-    #     maze.append([])
-    #     for j in range(5):
-    #         maze[-1].append(int(random()*5))
-
-    # maze = [[1,1,1,1,1],
-    #         [1,1,5,1,1],
-    #         [1,1,5,1,1],
-    #         [1,1,5,1,1]]
-    # start = (1, 3)
-    # end = (4, 1)
-
-    # path = search(maze,start,end)
-    # print('\n'.join([''.join(["{:>3d}".format(item) for item in row])
-    #         for row in path[0]]))
-    # print(path[1])

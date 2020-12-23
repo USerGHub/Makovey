@@ -2,11 +2,12 @@ from PyQt5.QtWidgets import QPushButton
 
 # Класс клетки на поле 
 class Cell(QPushButton):
-    def __init__(self, parent, x, y):
+    def __init__(self, parent, x, y, k=1):
         super(Cell, self).__init__(parent)
         self.resize(13,13)
 
         # Свойства ячейки
+        self.k = k # Коэффициент осведомленности
         # На путь между клетками тратится 3 сек
         self.cost = [0,0,0] # Первое число для нарушителя, второе – для ТГ, третье – для движения ТГ по следам нарушителя
         self.x = x
@@ -23,14 +24,15 @@ class Cell(QPushButton):
                                 'bomb': 0,
                                 'warm': 0,
                                 'gerkon': 0,
-                                'piezo': 0}
+                                'piezo': 0,
+                                'metal': 0}
         # Шанс необнаружения
         self.detect_prob = 1
 
         # Принимаем сигналы об основных объектов в виде пары чисел
         # для упрощения сохранения/загрузки файлов
-        # первое число – какое средство использовалось, второе – его свойства, третье – модификаторы
-        self.received_code = [None, None, None]
+        # первое число – какое средство использовалось, второе – его свойства
+        self.received_code = [None, None]
 
         # CSS стиль ячейки
         self.default_style = 'QPushButton {background-color: rgb(210,210,210); border-color:  black; border-radius: 3}'
@@ -47,39 +49,46 @@ class Cell(QPushButton):
         #
         if self.parent().videoFacility.isChecked():
             # Видеокамера
-            self.received_code[2] = 1
+            self.modifies_flags['video'] = 1
 
-        elif self.parent().glassFacility.isChecked():
+        if self.parent().glassFacility.isChecked():
             # Датчик разбития стекла
-            self.received_code[2] = 2
+            if self.received_code[0] == 9:
+                self.modifies_flags['glass'] = 1
                 
-        elif self.parent().capacityFacility.isChecked():
+        if self.parent().capacityFacility.isChecked():
             # Емкостное средство обнаружения
-            self.received_code[2] = 3
+            self.modifies_flags['capacity'] = 1
                 
-        elif self.parent().radioFacility.isChecked():
+        if self.parent().radioFacility.isChecked():
             # Радиолучевое средство обнаружения
-            self.received_code[2] = 4
+            self.modifies_flags['radio'] = 1
 
-        elif self.parent().irFacility.isChecked():
+        if self.parent().irFacility.isChecked():
             # ИК-датчик
-            self.received_code[2] = 5
+            self.modifies_flags['ir'] = 1
 
         elif self.parent().bombFacility.isChecked():
             # Обнаружитель ВВ
-            self.received_code[2] = 6
+            self.modifies_flags['bomb'] = 1
 
-        elif self.parent().warmFacility.isChecked():
+        if self.parent().warmFacility.isChecked():
             # Тепловой датчик
-            self.received_code[2] = 7
+            self.modifies_flags['warm'] = 1
 
-        elif self.parent().gerkonFacility.isChecked():
+        if self.parent().gerkonFacility.isChecked():
             # Герконовый датчик
-            self.received_code[2] = 8
+            self.modifies_flags['gerkon'] = 1
 
-        elif self.parent().piezoFacility.isChecked():
+        if self.parent().piezoFacility.isChecked():
             # Пьезо датчик
-            self.received_code[2] = 9
+            self.modifies_flags['piezo'] = 1
+
+        if self.parent().metalFacility.isChecked():
+            # Металлоискатель
+            if self.received_code[0] in (None,1):
+                self.modifies_flags['metal'] = 1
+            
 
         #
         # Неподвижные объекты
@@ -262,73 +271,74 @@ class Cell(QPushButton):
     # Отрисовка клетки
     def cellProcess(self, received_code):
 
+
+        self.detect_prob = 1
         #
         # Средства обнаружения (модификаторы)
         #
-        if received_code[2] == 1:
-            # Видеокамера
-            if not self.modifies_flags['video']:
-                self.modifies_flags['video'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.95)
-                self.drawFacility('brown', 1)
-
-        elif received_code[2] == 2:
-            # Датчик разбития стекла
-            if 'WindowPic.png' in self.style:
-                if not self.modifies_flags['glass']:
-                    self.modifies_flags['glass'] = 1
-                    self.detect_prob *= self.detect_prob*(1-0.95)
-                    self.drawFacility('blue', 1)
-                
-        elif received_code[2] == 3:
-            # Емкостное средство обнаружения
-            if not self.modifies_flags['capacity']:
-                self.modifies_flags['capacity'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.9)
-                self.drawFacility('red', 1)
-                
-        elif received_code[2] == 4:
-            # Радиолучевое средство обнаружения
-            if not self.modifies_flags['radio']:
-                self.modifies_flags['radio'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.95)
-                self.drawFacility('brown', 2)
-
-        elif received_code[2] == 5:
-            # ИК-датчик
-            if not self.modifies_flags['ir']:
-                self.modifies_flags['ir'] = 1
-                self.detect_prob *= self.detect_prob*(1-1)
-                self.drawFacility('blue', 2)
-
-        elif received_code[2] == 6:
-            # Обнаружитель ВВ
-            if not self.modifies_flags['bomb']:
-                self.modifies_flags['bomb'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.95)
-                self.drawFacility('red', 2)
-
-        elif received_code[2] == 7:
-            # Тепловой датчик
-            if not self.modifies_flags['warm']:
-                self.modifies_flags['warm'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.95)
-                self.drawFacility('brown', 3)
-
-        elif received_code[2] == 8:
-            # Герконовый датчик
-            if not self.modifies_flags['gerkon']:
-                self.modifies_flags['gerkon'] = 1
-                self.detect_prob *= self.detect_prob*(1-1)
-                self.drawFacility('blue', 3)
-
-        elif received_code[2] == 9:
-            # Пьезо датчик
-            if not self.modifies_flags['piezo']:
-                self.modifies_flags['piezo'] = 1
-                self.detect_prob *= self.detect_prob*(1-0.95)
-                self.drawFacility('red', 3)
         
+        # Видеокамера
+        if self.modifies_flags['video']:
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('brown', 1)
+
+        # Датчик разбития стекла
+        if self.modifies_flags['glass']:
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('blue', 1)
+                
+        # Емкостное средство обнаружения
+        if  self.modifies_flags['capacity']:
+            self.detect_prob *= self.detect_prob*(1-0.9)
+            self.drawFacility('red', 1)
+                
+        # Радиолучевое средство обнаружения
+        if self.modifies_flags['radio']:
+            self.modifies_flags['radio'] = 1
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('brown', 2)
+
+        # ИК-датчик
+        if self.modifies_flags['ir']:
+            self.detect_prob *= self.detect_prob*(1-1)
+            self.drawFacility('blue', 2)
+
+        # Обнаружитель ВВ
+        if self.modifies_flags['bomb']:
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('red', 2)
+
+        # Тепловой датчик
+        if self.modifies_flags['warm']:
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('brown', 3)
+
+            # Герконовый датчик
+        if self.modifies_flags['gerkon']:
+            self.detect_prob *= self.detect_prob*(1-1)
+            self.drawFacility('blue', 3)
+
+        # Пьезо датчик
+        if self.modifies_flags['piezo']:
+            self.detect_prob *= self.detect_prob*(1-0.95)
+            self.drawFacility('red', 3)
+
+        # Металлоискатель
+        
+        if self.modifies_flags['metal']:
+            if super().parent().intruder_have[2] == 0:
+                self.detect_prob = self.detect_prob*(1-1)
+
+            facility_indicator = QPushButton(self)
+            facility_indicator.move(2,2)
+            facility_indicator.resize(10,10)
+            facility_indicator.setStyleSheet('''QPushButton {background-image: url(pictures/MeFinder.png);
+                        border-radius: 1px;background-color: rgba(255,255,255,0); border-color: black; border-radius: 5}''')
+            facility_indicator.clicked.connect(self.click)
+            facility_indicator.show()
+            facility_indicator.raise_()
+            self.modifies.append(facility_indicator)
+       
 
         # Чтобы не оставлять лишние клетки с подкопом и турникетом
         if 1 not in self.modifies_flags.values():
@@ -345,17 +355,17 @@ class Cell(QPushButton):
         if received_code[0] == 1:
             # Турникет
             self.style = 'QPushButton {background-color: white; color:black; border-color:  white; border-radius: 5}'
-            self.cost = [-1,6,0]
+            self.cost = [-1*super().parent().intruder_have[1],6,0]
             self.setText('T')
 
         elif received_code[0] == 2:
             # Шлюз
             self.style = 'QPushButton {background-color: white; color:black; border-color:  white; border-radius: 5}'
-            self.cost = [-1,6,0]
+            self.cost = [-1*super().parent().intruder_have[1],6,0]
             self.setText('Ш')
 
         elif received_code[0] == 3:
-            # Шлюз
+            # ЭМ замок
             self.style = 'QPushButton {background-color: white; color:black; border-color:  white; border-radius: 5}'
             self.cost = [-1,6,0]
             self.setText('L')
@@ -458,7 +468,7 @@ class Cell(QPushButton):
             if received_code[1] == 1:
                 self.cost = [5,-1,5]
             elif received_code[1] == 2:
-                self.cost = [6,-1,3]
+                self.cost = [6*super().parent().intruder_have[0],-1,3]
             elif received_code[1] == 3:
                 self.parent().diggings.append((self.x, self.y))
                 self.cost = [None,-1,3]

@@ -31,6 +31,9 @@
     <height>710</height>
    </size>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::TabFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -153,928 +156,6 @@
       <iconset theme="help-about">
        <normaloff>.</normaloff>.</iconset>
      </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="facilitiesBox">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>70</y>
-      <width>461</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <widget class="QStackedWidget" name="stackedWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>441</width>
-       <height>231</height>
-      </rect>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="page_1">
-      <widget class="QRadioButton" name="woodDoor">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>181</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Деревянная дверь</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="woodMetalDoor">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>171</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Деревянная дверь,
-обитая металлом</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="metalDoor">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>120</y>
-         <width>191</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Металлическая дверь</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="window">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>160</y>
-         <width>105</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Окно</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QComboBox" name="woodBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>40</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Выбивание</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрушение петель </string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрушение замка</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим двери</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим ригеля</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="woodMetalBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>80</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Выбивание</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрушение петель</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрушенеие замка</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим двери</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим ригеля</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="metalBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>120</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Выбивание</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрезание ножовкой</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Газовая резка</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Разрушение замка</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим двери</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Отжим ригеля</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="windowBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>160</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Пролом стекла А1-А3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Пролом стекла Б1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Пролом стекла Б2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Пролом стекла Б3</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QLabel" name="tacticsLabel_1">
-       <property name="geometry">
-        <rect>
-         <x>260</x>
-         <y>10</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Тактика преодоления</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="facilitiesLabel_1">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>171</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Инженерные средства</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="antiram">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>200</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Противотаранное уст-во</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <widget class="QRadioButton" name="concrete">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Бетонное ограждение</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="concreteAKP">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>171</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string notr="true">Бетонное
-ограждение с
-козырьком из АКП </string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="gridWall">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>130</y>
-         <width>201</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Сетчатое заграждение</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="barbedWall">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>170</y>
-         <width>171</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Колючая проволока</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QComboBox" name="concreteAKPBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>80</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Перелаз</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Подкоп</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="concreteBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>40</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Перелаз</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Подкоп</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="gridWallBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>120</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Перелаз</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Пролом</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Подкоп</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="barbedWallBox">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>160</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Перелаз</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Пролом</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Подкоп</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QLabel" name="facilitiesLabel_2">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>171</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Инженерные средства</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="tacticsLabel_2">
-       <property name="geometry">
-        <rect>
-         <x>260</x>
-         <y>10</y>
-         <width>151</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Тактика преодоления</string>
-       </property>
-      </widget>
-      <zorder>gridWallBox</zorder>
-      <zorder>concrete</zorder>
-      <zorder>concreteAKP</zorder>
-      <zorder>gridWall</zorder>
-      <zorder>barbedWall</zorder>
-      <zorder>concreteAKPBox</zorder>
-      <zorder>concreteBox</zorder>
-      <zorder>barbedWallBox</zorder>
-      <zorder>facilitiesLabel_2</zorder>
-      <zorder>tacticsLabel_2</zorder>
-     </widget>
-     <widget class="QWidget" name="page_3">
-      <widget class="QRadioButton" name="irFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>100</y>
-         <width>171</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Инфракрасный датчик</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="gerkonFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>100</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Герконовый датчик</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="turnstileFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>151</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Турникет</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QLabel" name="tacticsLabel_3">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>10</y>
-         <width>251</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Технические средства обнаружения</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="videoFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>70</y>
-         <width>151</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Видеокамера</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="glassFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>40</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Датчик разбития стекла</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="warmFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>70</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Тепловой извещатель</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="capacityFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>130</y>
-         <width>181</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Емкостное средство</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="radioFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>130</y>
-         <width>201</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Радиолучевое средство</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_4">
-      <widget class="QLabel" name="tacticsLabel_4">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>10</y>
-         <width>251</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Технические средства обнаружения</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="gatewayFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>151</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Шлюз</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="bombFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>70</y>
-         <width>151</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Обнаружитель ВВ</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="bioFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>100</y>
-         <width>221</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Биометрический считыватель</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="elmechFacility">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>130</y>
-         <width>221</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Электромеханический замок</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="cardFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>40</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Считыватели карт</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="alarmFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>70</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Кнопка тревоги</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-      <widget class="QRadioButton" name="piezoFacility">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>100</y>
-         <width>181</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Пьезоэлектрическое</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="tacticsBox">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>380</y>
-      <width>461</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Тактика действия ТГ</string>
-    </property>
-    <widget class="QRadioButton" name="consistentTactic">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>361</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Последовательная, с изменением маршрута</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="intermediateTactic">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>50</y>
-       <width>321</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>С выходом на промежуточный рубеж
-и без выхода на периметр </string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>500</y>
-      <width>461</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Ключевые точки</string>
-    </property>
-    <widget class="QRadioButton" name="intruder">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>201</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Положение нарушителя</string>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-    <widget class="QRadioButton" name="PFZ">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>60</y>
-       <width>181</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Положение ПФЗ</string>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-    <widget class="QRadioButton" name="startTG">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>30</y>
-       <width>211</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Начальное положение ТГ</string>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-    <widget class="QRadioButton" name="endTG">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>60</y>
-       <width>201</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Конечное положение ТГ</string>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
@@ -1204,62 +285,6 @@ QRadioButton::indicator::checked {
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="listButton_next">
-    <property name="geometry">
-     <rect>
-      <x>1110</x>
-      <y>80</y>
-      <width>20</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {border:  none}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="go-next">
-      <normaloff>.</normaloff>.</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="listButton_prev">
-    <property name="geometry">
-     <rect>
-      <x>1090</x>
-      <y>80</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {border:  none}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="go-previous">
-      <normaloff>.</normaloff>.</iconset>
-    </property>
-   </widget>
    <widget class="QPushButton" name="outputButton">
     <property name="geometry">
      <rect>
@@ -1273,19 +298,1123 @@ QRadioButton::indicator::checked {
      <string/>
     </property>
    </widget>
-   <zorder>actionButton</zorder>
-   <zorder>groundBox</zorder>
-   <zorder>facilitiesBox</zorder>
-   <zorder>tacticsBox</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>clearButton</zorder>
-   <zorder>clearCellButton</zorder>
-   <zorder>listButton_next</zorder>
-   <zorder>listButton_prev</zorder>
-   <zorder>saveButton</zorder>
-   <zorder>loadButton</zorder>
-   <zorder>outputButton</zorder>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>380</y>
+      <width>461</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>461</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="intruder_tab">
+     <attribute name="title">
+      <string>Нарушитель</string>
+     </attribute>
+     <widget class="QRadioButton" name="intruder">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Положение нарушителя</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="PFZ">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>140</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Положение ПФЗ</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="Line" name="intruder_line">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>120</y>
+        <width>461</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="knowledge_box">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Высокий</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Средний</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Низкий</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="knowledge_text">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Уровень осведомленности</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="intruder_tech_list">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>191</width>
+        <height>71</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="intruder_tech_button">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>90</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="popupMode">
+       <enum>QToolButton::DelayedPopup</enum>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonIconOnly</enum>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::NoArrow</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="equipment_text">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>10</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Техническое оснащение</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="intruder_add_tech_list">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>211</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Кусачки по металлу</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Поддельный пропуск</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Огнестрельное оружие</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tg_tab">
+     <attribute name="title">
+      <string>Тревожная группа</string>
+     </attribute>
+     <widget class="QRadioButton" name="startTG">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>211</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Начальное положение ТГ</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="endTG">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>140</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Конечное положение ТГ</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QLabel" name="tactic_label">
+      <property name="geometry">
+       <rect>
+        <x>-3</x>
+        <y>10</y>
+        <width>461</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Тактика действия ТГ</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="consistentTactic">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>361</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Последовательная, с изменением маршрута</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="intermediateTactic">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>321</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>С выходом на промежуточный рубеж
+и без выхода на периметр </string>
+      </property>
+     </widget>
+     <widget class="Line" name="tg_line">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>120</y>
+        <width>461</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>60</y>
+      <width>461</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="" native="true">
+     <attribute name="title">
+      <string>Инженерные 1</string>
+     </attribute>
+     <widget class="QRadioButton" name="woodDoor">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Деревянная дверь</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="woodMetalDoor">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Деревянная дверь,
+обитая металлом</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="metalDoor">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Металлическая дверь</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="window">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>105</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Окно</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QComboBox" name="woodBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Выбивание</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрушение петель </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрушение замка</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим двери</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим ригеля</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="woodMetalBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>80</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Выбивание</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрушение петель</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрушенеие замка</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим двери</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим ригеля</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="metalBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>120</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Выбивание</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрезание ножовкой</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Газовая резка</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Разрушение замка</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим двери</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отжим ригеля</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="windowBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>160</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Пролом стекла А1-А3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Пролом стекла Б1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Пролом стекла Б2</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Пролом стекла Б3</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="tacticsLabel_1">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>10</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Тактика преодоления</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="facilitiesLabel_1">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>171</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Инженерные средства</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="antiram">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>200</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Противотаранное уст-во</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="turnstileFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>200</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Турникет</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabWidgetPage2" native="true">
+     <attribute name="title">
+      <string>Инженерные 2</string>
+     </attribute>
+     <widget class="QRadioButton" name="concrete">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Бетонное ограждение</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="concreteAKP">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string notr="true">Бетонное
+ограждение с
+козырьком из АКП </string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="gridWall">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Сетчатое заграждение</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="barbedWall">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>171</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Колючая проволока</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QComboBox" name="concreteAKPBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>80</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Перелаз</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Подкоп</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="concreteBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Перелаз</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Подкоп</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="gridWallBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>120</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Перелаз</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Пролом</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Подкоп</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="barbedWallBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>160</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Перелаз</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Пролом</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Подкоп</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="facilitiesLabel_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>171</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Инженерные средства</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="tacticsLabel_2">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>10</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Тактика преодоления</string>
+      </property>
+     </widget>
+     <zorder>gridWallBox</zorder>
+     <zorder>concrete</zorder>
+     <zorder>concreteAKP</zorder>
+     <zorder>gridWall</zorder>
+     <zorder>barbedWall</zorder>
+     <zorder>concreteAKPBox</zorder>
+     <zorder>concreteBox</zorder>
+     <zorder>barbedWallBox</zorder>
+     <zorder>facilitiesLabel_2</zorder>
+     <zorder>tacticsLabel_2</zorder>
+    </widget>
+    <widget class="QWidget" name="tabWidgetPage3" native="true">
+     <attribute name="title">
+      <string>Технические 1</string>
+     </attribute>
+     <widget class="QRadioButton" name="irFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>171</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Инфракрасный датчик</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="gerkonFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>100</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Герконовый датчик</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QLabel" name="tacticsLabel_3">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Технические средства</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="videoFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Видеокамера</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="glassFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Датчик разбития стекла</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="warmFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Тепловой извещатель</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="capacityFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>130</y>
+        <width>181</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Емкостное средство</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="radioFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Радиолучевое средство</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="metalFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Металлоискатель</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabWidgetPage4" native="true">
+     <attribute name="title">
+      <string>Технические 2</string>
+     </attribute>
+     <widget class="QLabel" name="tacticsLabel_4">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>191</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Технические средства</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="gatewayFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Шлюз</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="bombFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Обнаружитель ВВ</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="bioFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>221</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Биометрический считыватель</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="elmechFacility">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>221</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Электромеханический замок</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="cardFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>40</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Считыватели карт</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="alarmFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>70</y>
+        <width>191</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Кнопка тревоги</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+     <widget class="QRadioButton" name="piezoFacility">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>100</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Пьезоэлектрическое</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

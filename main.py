@@ -18,7 +18,6 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        
         # Создание файла ошибок
         with open('logs', 'w') as log_file:
             pass
@@ -34,6 +33,15 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.diggings = []
         # Строка вывода
         self.outputButton.setText('')
+        # Технические средства нарушителя
+        # [Кусачки, Поддельный пропуск, Огнестрельное оружие] 
+        # !!! 1 -- это отсутствие
+        self.intruder_have = [1,1,1]
+        # Коэффициент осведомленности
+        path.step_cost = 3*0.6
+        self.knowledge_box.currentIndexChanged.connect(self.knowledgeChange)
+
+
         # Отрисовка дополнительных компонентов
         self.UiComponents()
         # 
@@ -55,9 +63,6 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                 cell.clicked.connect(cell.click)
                 self.field[-1].append(cell)
         #
-        # Кнопка перелистывания окна инженерных средств
-        self.listButton_next.clicked.connect(lambda: self.listMenu('next'))
-        self.listButton_prev.clicked.connect(lambda: self.listMenu('prev'))
         # Кнопка вызова справки
         self.helpGroundButton.clicked.connect(self.groundHelp)
         # Кнопка вызова полного отчета
@@ -72,22 +77,15 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # Кнопка загрузки
         self.loadButton.clicked.connect(lambda: saving.load(self))
         self.loadButton.setIcon(QIcon('pictures/open.png'))
+        # Кнопка технических средств нарушителя
+        self.intruder_tech_button.clicked.connect(self.changeTech)
+        # Скрыть кнопки настроек нарушителя
+        self.intruder_add_tech_list.setVisible(False)
+        # Привязка функций на кнопки тех средств нарушителя
+        self.intruder_add_tech_list.itemDoubleClicked.connect(self.addTech)
+        # Удаление элемента по двойному щелчку
+        self.intruder_tech_list.itemDoubleClicked.connect(self.removeTech)
 
-
-    # Функция бесконечного перелистывания инженерных средств
-    def listMenu(self, direction):
-
-        current_page = self.stackedWidget.currentIndex()
-        max_pages = self.stackedWidget.count()
-        if direction == 'next':
-            current_page += 1
-            if current_page > max_pages-1:
-                current_page = 0
-        else:
-            current_page -= 1
-            if current_page < 0:
-                current_page = max_pages-1
-        self.stackedWidget.setCurrentIndex(current_page)
 
     # Функция пересчета типа почвы в длину прохождения ячеек при подкопе
     def diggiCalculation(self, diggi_cells):
@@ -200,7 +198,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                     
         tg_least_path = None
         # Ищем критический путь для ТГ
-        
+        path.step_cost = 3 # Костыль
         # Последовательная тактика
         if self.consistentTactic.isChecked():
             try:
@@ -253,12 +251,13 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
                                 tg_least_path.append(point)
                                 point_cost = self.field[point[0]][point[1]].cost[2]
                                 self.tg_cost.append(self.tg_cost[-1]+point_cost+path.step_cost)
-
+            
             except:
                 with open('logs', 'a') as log_file:
                     log_file.write('Ошибка ТГ: тактика выход на рубеж\n')
                     log_file.write('Ошибка:\n' + traceback.format_exc() + '\n\n')
-
+        self.knowledgeChange() # Конец костыля
+        
         # Находим точку пересечения нарушителя и ТГ
         try:
             self.meet_point = self.detectIntruder(intruder_least_path, self.intruder_cost, tg_least_path, self.tg_cost)
@@ -271,20 +270,20 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
             # Отрисовка найденого пути
             self.drawPath(intruder_least_path, tg_least_path) 
             # Вывод длины наименьшего пути
-            self.outputButton.setText(f'Время пути нарушителя: {self.intruder_cost[-1]} сек.')
+            self.outputButton.setText(f'Время пути нарушителя: {self.intruder_cost[-1]:.2f} сек.')
 
             self.outputButton.setText(f'{self.outputButton.text()}\n'
-                                     f'Время пути ТГ: {self.tg_cost[-1]} сек.')
+                                     f'Время пути ТГ: {self.tg_cost[-1]:.2f} сек.')
             # Минимальная разница во времени между ТГ и нарушителем
             if self.cost_differents:
                 self.cost_differents.sort()
                 different = self.cost_differents[0]
                 if different[1] == '+':
                      self.outputButton.setText(f'{self.outputButton.text()}\n'
-                                              f'ТГ опоздала на {different[0]} сек.')
+                                              f'ТГ опоздала на {different[0]:.2f} сек.')
                 elif different[1] == '-':
                     self.outputButton.setText(f'{self.outputButton.text()}\n'
-                                              f'ТГ поспешила на {different[0]} сек.')
+                                              f'ТГ поспешила на {different[0]:.2f} сек.')
             else:
                 self.outputButton.setText(f'{self.outputButton.text()}\n'
                                         f'Нарушитель задержан в точке ({self.meet_point[1]+1},{self.meet_point[0]+1})')
@@ -458,6 +457,80 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         dialog.button.setText('✓ OK')
         dialog.exec_()
 
+# Добаление тех средств нарушителю
+# Открыть/скрыть меню
+    def changeTech(self,tech=None):
+        objects = [self.intruder_add_tech_list,self.knowledge_text,self.knowledge_box]
+        for object in objects:
+            object.setVisible(not object.isVisible())
+    
+    def addTech(self):
+        tech = self.intruder_add_tech_list.currentItem().text()
+        list_text = []
+        for i in range(self.intruder_tech_list.count()):
+            list_text.append(self.intruder_tech_list.item(i).text())
+
+        if tech == 'Кусачки по металлу':
+            if tech not in list_text:
+                self.intruder_tech_list.addItem(tech)
+                self.intruder_have[0] = 0.6
+                for col in self.field:
+                    for row in col:
+                        if row.received_code[0] == 12:
+                            row.cellProcess(row.received_code)
+
+        elif tech == 'Поддельный пропуск':
+            if tech not in list_text:
+                self.intruder_tech_list.addItem(tech)
+                self.intruder_have[1] = 0
+                for col in self.field:
+                    for row in col:
+                        if row.received_code[0] in (1,2):
+                            row.cellProcess(row.received_code)
+
+        elif tech == 'Огнестрельное оружие':
+            if tech not in list_text:
+                self.intruder_tech_list.addItem(tech)
+                self.intruder_have[2] = 0
+                for col in self.field:
+                    for row in col:
+                        if row.modifies_flags['metal'] == 1:
+                            row.cellProcess(row.received_code)
+
+# Удаление тех средств нарушителя
+    def removeTech(self):
+        item = self.intruder_tech_list.takeItem(self.intruder_tech_list.currentRow())
+        tech = item.text()
+        if tech == 'Кусачки по металлу':
+            self.intruder_have[0] = 1
+            for col in self.field:
+                for row in col:
+                    if row.received_code[0] == 12:
+                        row.cellProcess(row.received_code)
+        elif tech == 'Поддельный пропуск':
+            self.intruder_have[1] = 1
+            for col in self.field:
+                for row in col:
+                    if row.received_code[0] in (1,2):
+                        row.cellProcess(row.received_code)
+
+        elif tech == 'Огнестрельное оружие':
+            self.intruder_have[2] = 1
+            for col in self.field:
+                    for row in col:
+                        if row.modifies_flags['metal'] == 1:
+                            row.cellProcess(row.received_code)
+
+# Изменение осведомленности
+    def knowledgeChange(self):
+        current_text = self.knowledge_box.currentText()
+        if current_text == 'Высокий':
+            path.step_cost = 0.6*3
+        elif current_text == 'Средний':
+            path.step_cost = 0.7*3
+        elif current_text == 'Низкий':
+            path.step_cost = 0.8*3          
+
 # Вывод полного отчета
     def fullReport(self):
                
@@ -470,7 +543,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         if self.intermediateTactic.isChecked():
             try:
                 report_text.append(f'Точка обнаружения нарушителя ({self.detect_point[1]+1},{self.detect_point[0]+1})')
-                report_text.append(f'Время обнаружения: {self.time_before_detect} сек.\n')
+                report_text.append(f'Время обнаружения: {self.time_before_detect:.2f} сек.\n')
             except:
                 report_text.append(f'Нарушитель не обнаружен\n')
         else:
@@ -479,24 +552,24 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # Информация о задержании
         try:
             report_text.append(f'Нарушитель задержан в точке ({self.meet_point[1]+1},{self.meet_point[0]+1})')
-            report_text.append(f'Время до задержания: {self.time_before_meet} сек.\n')
+            report_text.append(f'Время до задержания: {self.time_before_meet:.2f} сек.\n')
         except:
             report_text.append(f'Нарушитель не задержан\n')
         
         # Информация по нарушителю
         try:
             report_text.append(f'Время действия нарушителя:')
-            report_text.append(f'\tполное: {self.intruder_cost[-1]} сек.')
-            report_text.append(f'\tбез учета времени до первого обнаружения: {self.intruder_cost[-1]-self.time_before_detect} сек.')
-            report_text.append(f'\tдо первого сигнала обнаружения: {self.time_before_detect} сек.\n')
+            report_text.append(f'\tполное: {self.intruder_cost[-1]:.2f} сек.')
+            report_text.append(f'\tбез учета времени до первого обнаружения: {self.intruder_cost[-1]-self.time_before_detect:.2f} сек.')
+            report_text.append(f'\tдо первого сигнала обнаружения: {self.time_before_detect:.2f} сек.\n')
         except:
             pass
 
         # Информация по ТГ
         try:
             report_text.append(f'Время действия сил реагирования:')
-            report_text.append(f'\tполное: {self.tg_cost[-1]} сек.')
-            report_text.append(f'\tбез учета времени на подготовку: {self.tg_cost[-1]-self.time_before_detect} сек.\n')
+            report_text.append(f'\tполное: {self.tg_cost[-1]:.2f} сек.')
+            report_text.append(f'\tбез учета времени на подготовку: {self.tg_cost[-1]-self.time_before_detect:.2f} сек.\n')
         except:
             pass
 

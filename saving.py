@@ -19,12 +19,12 @@ def saveField(field):
     for col in field:
         for cell in col:
             saveProperty.append([])
-            # Средства обнаружения
-            for value in cell.modifies_flags.values():
-                saveProperty[-1].append(value)
             # Основные хар-ки клетки
             saveProperty[-1].append(cell.received_code[0])
             saveProperty[-1].append(cell.received_code[1])
+            # Средства обнаружения
+            for value in cell.modifies_flags.values():
+                saveProperty[-1].append(value)
             
     return(saveProperty)
 
@@ -48,14 +48,21 @@ def load(parent):
                     else:
                         el.append(int(j)) 
                 # Очищаем поле
-                cell.cellProcess([0,None,None])
+                for key in cell.modifies_flags:
+                    cell.modifies_flags[key]=0
+                cell.cellProcess([0,None])
+                
                 # Проходимся по модификаторам...
-                for index in range(len(el)-2):
+                index = 2
+                for key in cell.modifies_flags:
                     if el[index]:
-                        cell.cellProcess([None,None,index+1])
+                        cell.modifies_flags[key]=1
+                    index += 1
+                    if index+1 > len(el):
+                        break
+
                 # ... и по основным свойства
-                if el[-2]:
-                    cell.cellProcess([el[-2],el[-1],None])
+                cell.cellProcess([el[0],el[1]])
                 i += 1
     except:
         with open('logs', 'a') as log_file:
